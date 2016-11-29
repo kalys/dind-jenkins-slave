@@ -17,6 +17,7 @@ RUN apt-get update -qq && apt-get install -qqy \
     ca-certificates \
     curl \
     lxc \
+    unzip \
     iptables && \
     rm -rf /var/lib/apt/lists/*
 
@@ -39,6 +40,13 @@ RUN chmod +x /usr/local/bin/docker-compose
 # group. Needed to access the docker daemon's unix socket.
 RUN usermod -a -G docker jenkins
 
+RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip" && \
+    unzip awscli-bundle.zip && \
+    ./awscli-bundle/install -b ~/bin/aws && \
+    rm -Rf awscli-bundle.zip awscli-bundle
+
+ENV AWS_ACCESS_KEY_ID foo
+ENV AWS_SECRET_ACCESS_KEY bar
 
 # place the jenkins slave startup script into the container
 ADD jenkins-slave-startup.sh /

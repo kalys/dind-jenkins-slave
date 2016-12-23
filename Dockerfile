@@ -36,8 +36,8 @@ VOLUME /var/lib/docker
 ADD docker-compose /usr/local/bin/docker-compose
 RUN chmod +x /usr/local/bin/docker-compose
 
-ADD rancher-compose /usr/local/bin/rancher-compose
-RUN chmod +x /usr/local/bin/rancher-compose
+ADD rancher /usr/local/bin/rancher
+RUN chmod +x /usr/local/bin/rancher
 
 # Make sure that the "jenkins" user from evarga's image is part of the "docker"
 # group. Needed to access the docker daemon's unix socket.

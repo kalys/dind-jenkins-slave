@@ -24,7 +24,7 @@ RUN apt-get update -qq && apt-get install -qqy \
 RUN echo deb https://apt.dockerproject.org/repo ubuntu-trusty main > /etc/apt/sources.list.d/docker.list && \
     apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 
-ENV DOCKER_VERSION 1.11.1-0~trusty
+ENV DOCKER_VERSION 1.13.1-0~ubuntu-trusty
 
 # Install Docker from Docker Inc. repositories.
 RUN apt-get update && apt-get install -y docker-engine=$DOCKER_VERSION && rm -rf /var/lib/apt/lists/*
@@ -43,13 +43,13 @@ RUN chmod +x /usr/local/bin/rancher
 # group. Needed to access the docker daemon's unix socket.
 RUN usermod -a -G docker jenkins
 
-RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip" && \
-    unzip awscli-bundle.zip && \
-    ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws && \
-    rm -Rf awscli-bundle.zip awscli-bundle
-
-ENV AWS_ACCESS_KEY_ID foo
-ENV AWS_SECRET_ACCESS_KEY bar
+# RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip" && \
+#     unzip awscli-bundle.zip && \
+#     ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws && \
+#     rm -Rf awscli-bundle.zip awscli-bundle
+# 
+# ENV AWS_ACCESS_KEY_ID foo
+# ENV AWS_SECRET_ACCESS_KEY bar
 
 # place the jenkins slave startup script into the container
 ADD jenkins-slave-startup.sh /
